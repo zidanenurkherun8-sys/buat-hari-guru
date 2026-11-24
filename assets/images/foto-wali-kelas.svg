@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0F5"/>
+      <stop offset="50%" stop-color="#FCE4EC"/>
+      <stop offset="100%" stop-color="#F8BBD0"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F9D423"/>
+      <stop offset="100%" stop-color="#FF4E50"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#D96B82" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="750" fill="url(#bgGrad)"/>
+
+  <!-- Botanical Decorative Elements -->
+  <g opacity="0.4" stroke="#D96B82" stroke-width="1.5" fill="none">
+    <path d="M 50 100 C 120 50, 180 120, 220 80 C 250 50, 220 20, 150 50 Z" fill="#FCE4EC"/>
+    <path d="M 550 650 C 480 700, 420 630, 380 670 C 350 700, 380 730, 450 700 Z" fill="#FCE4EC"/>
+    <!-- Gentle Vines -->
+    <path d="M 20 20 Q 80 120 40 220 T 60 380"/>
+    <path d="M 580 730 Q 520 630 560 530 T 540 370"/>
+  </g>
+
+  <!-- Frame Circle / Card -->
+  <circle cx="300" cy="300" r="170" fill="#FFFFFF" filter="url(#shadow)"/>
+  <circle cx="300" cy="300" r="162" stroke="#D96B82" stroke-width="3" stroke-dasharray="8 6" fill="none"/>
+
+  <!-- Teacher Illustration Silhouette -->
+  <g transform="translate(180, 180)">
+    <!-- Hijab / Hair & Silhouette -->
+    <path d="M 120 40 C 70 40 40 85 40 145 C 40 205 70 230 75 250 L 165 250 C 170 230 200 205 200 145 C 200 85 170 40 120 40 Z" fill="#D96B82"/>
+    <!-- Face Inner -->
+    <ellipse cx="120" cy="135" rx="42" ry="50" fill="#FFE0B2"/>
+    <!-- Smile & Eyes -->
+    <path d="M 102 125 Q 110 120 115 125" stroke="#5D4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 125 125 Q 130 120 138 125" stroke="#5D4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 112 150 Q 120 160 128 150" stroke="#E57373" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Hijab Drapery -->
+    <path d="M 60 210 Q 120 255 180 210 Q 120 230 60 210 Z" fill="#9E3B53" opacity="0.7"/>
+    <!-- Glasses -->
+    <circle cx="108" cy="126" r="13" stroke="#C8A252" stroke-width="2" fill="none"/>
+    <circle cx="132" cy="126" r="13" stroke="#C8A252" stroke-width="2" fill="none"/>
+    <line x1="121" y1="126" x2="119" y2="126" stroke="#C8A252" stroke-width="2"/>
+    <!-- Math Formula Floating Symbol -->
+    <text x="180" y="70" font-family="'Times New Roman', serif" font-size="28" font-style="italic" fill="#C8A252" font-weight="bold">∑</text>
+    <text x="30" y="80" font-family="'Times New Roman', serif" font-size="24" font-style="italic" fill="#C8A252" font-weight="bold">π</text>
+    <text x="210" y="160" font-family="'Times New Roman', serif" font-size="22" font-style="italic" fill="#C8A252" font-weight="bold">∞</text>
+  </g>
+
+  <!-- Flower Wreath Base -->
+  <g transform="translate(300, 470)">
+    <circle cx="0" cy="0" r="14" fill="#D96B82"/>
+    <circle cx="-25" cy="4" r="10" fill="#F06292"/>
+    <circle cx="25" cy="4" r="10" fill="#F06292"/>
+    <ellipse cx="-45" cy="8" rx="14" ry="7" fill="#81C784" transform="rotate(-20 -45 8)"/>
+    <ellipse cx="45" cy="8" rx="14" ry="7" fill="#81C784" transform="rotate(20 45 8)"/>
+  </g>
+
+  <!-- Typography Banner -->
+  <rect x="75" y="520" width="450" height="150" rx="20" fill="#FFFFFF" opacity="0.92" filter="url(#shadow)"/>
+  <text x="300" y="565" text-anchor="middle" font-family="'Playfair Display', serif, Georgia" font-size="28" font-weight="bold" fill="#2A2528">
+    Bu Dewi Arni, S.Pd.
+  </text>
+  <text x="300" y="600" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#9E3B53">
+    Wali Kelas 11 RPL B • Guru Matematika
+  </text>
+  <text x="300" y="635" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" fill="#757575">
+    SMKN 1 Cimahi
+  </text>
+
+  <!-- Instruction Badge -->
+  <rect x="180" y="685" width="240" height="32" rx="16" fill="#C8A252" opacity="0.9"/>
+  <text x="300" y="706" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">
+    📷 Klik untuk Pasang Foto Asli
+  </text>
+</svg>

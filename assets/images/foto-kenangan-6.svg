@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE4EC"/>
+      <stop offset="100%" stop-color="#FFCDD2"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" fill="url(#g6)"/>
+  <circle cx="250" cy="220" r="130" fill="#FFFFFF" opacity="0.75"/>
+  <!-- Flower bouquet motif -->
+  <g transform="translate(190, 120)">
+    <!-- Flowers -->
+    <circle cx="60" cy="50" r="28" fill="#E91E63"/>
+    <circle cx="25" cy="80" r="24" fill="#F06292"/>
+    <circle cx="95" cy="80" r="24" fill="#BA68C8"/>
+    <circle cx="60" cy="100" r="22" fill="#FF80AB"/>
+    <!-- Center buds -->
+    <circle cx="60" cy="50" r="10" fill="#FFF59D"/>
+    <circle cx="25" cy="80" r="8" fill="#FFF59D"/>
+    <circle cx="95" cy="80" r="8" fill="#FFF59D"/>
+    <!-- Stems & Ribbon -->
+    <path d="M 60 120 L 60 170" stroke="#4CAF50" stroke-width="6"/>
+    <path d="M 40 120 L 55 170" stroke="#4CAF50" stroke-width="5"/>
+    <path d="M 80 120 L 65 170" stroke="#4CAF50" stroke-width="5"/>
+    <!-- Ribbon bow -->
+    <ellipse cx="45" cy="150" rx="15" ry="10" fill="#C8A252" transform="rotate(-20 45 150)"/>
+    <ellipse cx="75" cy="150" rx="15" ry="10" fill="#C8A252" transform="rotate(20 75 150)"/>
+    <circle cx="60" cy="150" r="6" fill="#A88132"/>
+  </g>
+  <text x="250" y="420" text-anchor="middle" font-family="'Playfair Display', serif" font-size="20" font-weight="bold" fill="#B71C1C">"Terima Kasih, Bu Dewi"</text>
+  <text x="250" y="450" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" fill="#C62828">Wali Kelas Paling Istimewa di Hati Kami</text>
+</svg>

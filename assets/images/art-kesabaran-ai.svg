@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgObsidian" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#1A0D18"/>
+      <stop offset="60%" stop-color="#0E070F"/>
+      <stop offset="100%" stop-color="#050306"/>
+    </radialGradient>
+    <radialGradient id="auroraGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF5C8A" stop-opacity="0.8"/>
+      <stop offset="45%" stop-color="#E040FB" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="crystalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="30%" stop-color="#FF80AB" stop-opacity="0.7"/>
+      <stop offset="70%" stop-color="#7C4DFF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#00E676" stop-opacity="0.6"/>
+    </linearGradient>
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#bgObsidian)"/>
+  <circle cx="400" cy="400" r="350" fill="url(#auroraGlow)"/>
+
+  <!-- Geometric Crystal Prism (Patience & Mentorship) -->
+  <g transform="translate(400, 380)" filter="url(#neonGlow)">
+    <!-- Light Rays -->
+    <path d="M 0 -180 L -220 220 L 220 220 Z" fill="none" stroke="rgba(255, 92, 138, 0.4)" stroke-width="1.5"/>
+    <path d="M 0 -220 L -260 200 L 260 200 Z" fill="none" stroke="rgba(224, 64, 251, 0.3)" stroke-width="1.5"/>
+    
+    <!-- Outer Octahedron facets -->
+    <polygon points="0,-160 -120,-20 0,160 120,-20" fill="url(#crystalGrad)" opacity="0.45"/>
+    <polygon points="0,-160 0,160 120,-20" fill="url(#crystalGrad)" opacity="0.6"/>
+    <polygon points="0,-160 0,160 -120,-20" fill="url(#crystalGrad)" opacity="0.3"/>
+    
+    <!-- Central Core Luminescence -->
+    <circle cx="0" cy="0" r="45" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="0" cy="0" r="70" fill="#FF80AB" opacity="0.4"/>
+
+    <!-- Sacred Geometry Rings -->
+    <circle cx="0" cy="0" r="140" fill="none" stroke="#FFD54F" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.7"/>
+    <circle cx="0" cy="0" r="190" fill="none" stroke="#00E676" stroke-width="1" stroke-dasharray="4 12" opacity="0.5"/>
+    <circle cx="0" cy="0" r="240" fill="none" stroke="#E040FB" stroke-width="1.5" opacity="0.4"/>
+  </g>
+
+  <!-- Typography Overlay -->
+  <text x="400" y="690" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="800" fill="#FFFFFF" letter-spacing="4">THE GEOMETRY OF PATIENCE</text>
+  <text x="400" y="725" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="13" font-weight="600" fill="#FF80AB" letter-spacing="2">DEDICATED TO BU DEWI ARNI • 11 RPL B</text>
+</svg>

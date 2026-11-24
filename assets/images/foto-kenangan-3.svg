@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE4EC"/>
+      <stop offset="100%" stop-color="#F8BBD0"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" fill="url(#g3)"/>
+  <circle cx="250" cy="220" r="130" fill="#FFFFFF" opacity="0.7"/>
+  <!-- Laughter & warmth doodle -->
+  <g transform="translate(160, 140)">
+    <circle cx="90" cy="90" r="70" fill="#FFD54F" stroke="#FFA000" stroke-width="4"/>
+    <ellipse cx="65" cy="75" rx="8" ry="12" fill="#5D4037"/>
+    <ellipse cx="115" cy="75" rx="8" ry="12" fill="#5D4037"/>
+    <path d="M 50 100 Q 90 140 130 100" stroke="#5D4037" stroke-width="6" fill="#D32F2F" stroke-linecap="round"/>
+    <!-- Blush -->
+    <circle cx="50" cy="95" r="10" fill="#FF8A80" opacity="0.6"/>
+    <circle cx="130" cy="95" r="10" fill="#FF8A80" opacity="0.6"/>
+  </g>
+  <text x="250" y="420" text-anchor="middle" font-family="'Playfair Display', serif" font-size="20" font-weight="bold" fill="#880E4F">"Canda Tawa &amp; Kebersamaan"</text>
+  <text x="250" y="450" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" fill="#C2185B">Hangatnya Suasana Kelas Kita</text>
+</svg>
