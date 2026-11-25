@@ -4685,9 +4685,7 @@
          ---------------------------------------------------------------------- */
       const WISHES_STORAGE_KEY = 'hgn2026_budevi_11rplb_wishes_v4';
       let wishesList = safeStorage.get(WISHES_STORAGE_KEY, null);
-      if (!Array.isArray(wishesList) || wishesList.length === 0) {
-        wishesList = SITE_DATA.defaultWishes.map((item) => ({ ...item }));
-      }
+      let wishesList = [];
 
       const wishesContainer = document.getElementById('wishes-container');
       const wishCountStatus = document.getElementById('wish-count-status');
@@ -4723,6 +4721,11 @@
 
       function renderWishes() {
         wishesContainer.className = 'notes-board-grid';
+        if (wishesList.length === 0) {
+          wishesContainer.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem;">Belum ada catatan. Jadilah siswa 11 RPL B pertama yang menulis doa untuk Bu Dewi!</div>';
+          wishCountStatus.textContent = '0 NOTES';
+          return;
+        }
         wishesContainer.innerHTML = wishesList.map((w, index) => {
           const theme = noteThemes[index % noteThemes.length];
           return `
@@ -4750,7 +4753,7 @@
           .from('wishes')
           .select('*')
           .order('created_at', { ascending: true });
-        if (!error && Array.isArray(data) && data.length > 0) {
+        if (!error && Array.isArray(data)) {
           wishesList = data.map((row, idx) => ({
             id: row.id,
             name: row.name,
