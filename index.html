@@ -2416,6 +2416,142 @@
       color: #ffffff;
     }
 
+    .music-ctrl-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .music-ctrl-btn:hover {
+      background: rgba(255, 117, 151, 0.18);
+      border-color: var(--champagne);
+      color: #ffffff;
+      transform: scale(1.06);
+    }
+
+    .music-playlist-popover {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 0.75rem);
+      width: min(310px, calc(100vw - 1.5rem));
+      padding: 0.75rem;
+      border-radius: 18px;
+      background: rgba(16, 11, 26, 0.96);
+      border: 1px solid rgba(255, 216, 155, 0.34);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      box-shadow: 0 22px 54px rgba(0, 0, 0, 0.85), 0 0 28px rgba(255, 117, 151, 0.2);
+      display: none;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 910;
+    }
+
+    .music-playlist-popover.is-open {
+      display: flex;
+      animation: fadeSlideUp 0.22s var(--ease-studio);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .playlist-header {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      padding: 0.2rem 0.45rem 0.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .playlist-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 11px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .playlist-item:hover {
+      background: rgba(255, 117, 151, 0.12);
+      border-color: rgba(255, 117, 151, 0.28);
+    }
+
+    .playlist-item.is-active {
+      background: linear-gradient(135deg, rgba(255, 117, 151, 0.2), rgba(217, 70, 239, 0.16));
+      border-color: rgba(255, 216, 155, 0.45);
+    }
+
+    .playlist-item-title {
+      font-family: var(--font-display);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #ffffff;
+      display: block;
+      line-height: 1.25;
+    }
+
+    .playlist-item-artist {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .playlist-item-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--champagne);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 600px) {
+      .music-dock {
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: 0.75rem;
+        justify-content: space-between;
+        gap: 0.45rem;
+        padding: 0.48rem 0.65rem;
+      }
+      .music-info {
+        min-width: 0;
+        flex: 1;
+      }
+      .music-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .eq-visualizer {
+        display: none;
+      }
+      .music-playlist-popover {
+        left: 0;
+        right: 0;
+        width: 100%;
+      }
+    }
+
     .eq-visualizer {
       display: flex;
       align-items: flex-end;
@@ -3340,6 +3476,23 @@
               </p>
             </div>
           </article>
+
+          <article class="capsule-card spotlight-card reveal">
+            <div class="capsule-media">
+              <img
+                src="assets/images/gmeet-11rplb.jpg"
+                alt="Pertemuan Daring Google Meet Kelas 11 RPL B bersama Ibu Dewi Arni"
+                loading="lazy"
+              />
+              <span class="capsule-slot-badge">Kenangan 04</span>
+            </div>
+            <div class="capsule-body">
+              <h3 class="capsule-title">Kelas Daring Penuh Kebersamaan</h3>
+              <p class="capsule-desc">
+                Meskipun lewat layar Google Meet, semangat belajar dan kehangatan kelas 11 RPL B bersama Bu Dewi tetap terasa dekat.
+              </p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -3488,8 +3641,24 @@
   <!-- ========================================================================
        FLOATING AMBIENT MUSIC SYNTHESIZER DOCK (DUAL-MODE WEB AUDIO API)
        ======================================================================== -->
-  <aside id="music-dock" class="music-dock" aria-label="Pemutar Melodi Piano Ambient">
-    <button type="button" id="music-toggle-btn" class="music-toggle-btn" aria-label="Putar atau jeda melodi piano">
+  <aside id="music-dock" class="music-dock" aria-label="Pemutar Playlist Lagu Hari Guru">
+    <audio id="bgm-audio" src="assets/audio/lagu-hari-guru.m4a" preload="auto"></audio>
+
+    <div id="music-playlist-popover" class="music-playlist-popover" role="dialog" aria-label="Daftar Lagu Hari Guru">
+      <div class="playlist-header">
+        <span>Playlist Hari Guru</span>
+        <span>4 Lagu</span>
+      </div>
+      <div id="playlist-items-container"></div>
+    </div>
+
+    <button type="button" id="music-prev-btn" class="music-ctrl-btn" aria-label="Lagu sebelumnya" title="Lagu Sebelumnya">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+      </svg>
+    </button>
+
+    <button type="button" id="music-toggle-btn" class="music-toggle-btn" aria-label="Putar atau jeda lagu">
       <span class="music-disc-ring" aria-hidden="true"></span>
       <svg id="icon-play" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
         <polygon points="7 4 20 12 7 20 7 4"></polygon>
@@ -3500,12 +3669,18 @@
       </svg>
     </button>
 
+    <button type="button" id="music-next-btn" class="music-ctrl-btn" aria-label="Lagu berikutnya" title="Lagu Berikutnya">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+      </svg>
+    </button>
+
     <div class="music-info">
-      <span class="music-title">Melodi untuk Bu Dewi</span>
-      <span class="music-sub" id="music-status-label">Melodi Piano &bull; Putar</span>
+      <span class="music-title" id="music-track-title">Terima Kasihku</span>
+      <span class="music-sub" id="music-status-label">Gita Gutawa &bull; Jeda</span>
     </div>
 
-    <button type="button" id="music-mode-btn" class="music-mode-btn" title="Ganti nuansa musik">PIANO</button>
+    <button type="button" id="music-mode-btn" class="music-mode-btn" title="Pilih daftar lagu">LAGU</button>
 
     <div class="eq-visualizer" aria-hidden="true">
       <span class="eq-bar"></span>
@@ -3819,28 +3994,86 @@
           });
         },
 
-        startMusic() {
-          this.init();
-          if (!this.ctx || this.isPlaying) return;
-          this.isPlaying = true;
-          this.updateDockUI();
+        playlist: [
+          { title: 'Terima Kasihku (Hari Guru)', artist: 'Gita Gutawa', src: 'assets/audio/lagu-hari-guru.m4a' },
+          { title: 'River Flows in You', artist: 'Yiruma • Piano Elegan', src: 'assets/audio/river-flows-in-you.m4a' },
+          { title: 'Nuvole Bianche', artist: 'Ludovico Einaudi • Klasik', src: 'assets/audio/nuvole-bianche.m4a' },
+          { title: 'Hymne Guru (Piano)', artist: 'Instrumental Hangat', src: 'assets/audio/hymne-guru-piano.m4a' }
+        ],
+        currentTrack: 0,
 
-          const tick = () => {
-            if (!this.isPlaying) return;
-            const step = this.sequence[this.stepIndex % this.sequence.length];
-            this.playTone(step.note, step.vel, 2.5);
-            if (step.bass && this.mode === 'piano') {
-              this.playTone(step.bass, 0.2, 3.6);
+        loadTrack(index, autoPlay = false) {
+          this.currentTrack = (index + this.playlist.length) % this.playlist.length;
+          const track = this.playlist[this.currentTrack];
+          const bgm = document.getElementById('bgm-audio');
+          if (bgm) {
+            bgm.src = track.src;
+            bgm.volume = 0.55;
+            if (autoPlay) {
+              bgm.play().catch(() => {});
+              this.isPlaying = true;
             }
-            this.stepIndex++;
-            this.timerId = setTimeout(tick, 470);
-          };
-          tick();
+          }
+          this.renderPlaylist();
+          this.updateDockUI();
+        },
+
+        nextTrack() {
+          this.loadTrack(this.currentTrack + 1, true);
+          this.playCrystalChime();
+        },
+
+        prevTrack() {
+          this.loadTrack(this.currentTrack - 1, true);
+          this.playCrystalChime();
+        },
+
+        togglePlaylist() {
+          const pop = document.getElementById('music-playlist-popover');
+          if (pop) pop.classList.toggle('is-open');
+        },
+
+        renderPlaylist() {
+          const container = document.getElementById('playlist-items-container');
+          if (!container) return;
+          container.innerHTML = this.playlist.map((item, idx) => `
+            <button type="button" class="playlist-item ${idx === this.currentTrack ? 'is-active' : ''}" data-track-idx="${idx}">
+              <div>
+                <span class="playlist-item-title">${item.title}</span>
+                <span class="playlist-item-artist">${item.artist}</span>
+              </div>
+              <span class="playlist-item-badge">${idx === this.currentTrack ? (this.isPlaying ? '▶ Putar' : '⏸ Dipilih') : `#0${idx + 1}`}</span>
+            </button>
+          `).join('');
+          container.querySelectorAll('.playlist-item').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const idx = Number(btn.getAttribute('data-track-idx'));
+              this.loadTrack(idx, true);
+              this.togglePlaylist();
+            });
+          });
+        },
+
+        startMusic() {
+          if (this.isPlaying) return;
+          const bgm = document.getElementById('bgm-audio');
+          if (bgm) {
+            bgm.volume = 0.55;
+            bgm.play().catch(() => {});
+          }
+          this.isPlaying = true;
+          this.renderPlaylist();
+          this.updateDockUI();
         },
 
         pauseMusic() {
           this.isPlaying = false;
           clearTimeout(this.timerId);
+          const bgm = document.getElementById('bgm-audio');
+          if (bgm) {
+            bgm.pause();
+          }
+          this.renderPlaylist();
           this.updateDockUI();
         },
 
@@ -3853,28 +4086,36 @@
         },
 
         switchMode() {
-          this.mode = this.mode === 'piano' ? 'musicbox' : 'piano';
-          document.getElementById('music-mode-btn').textContent = this.mode === 'piano' ? 'PIANO' : 'CELESTA';
-          this.playCrystalChime();
-          showToast(`Nuansa musik diubah ke ${this.mode === 'piano' ? 'Alunan Piano' : 'Kotak Musik'}`);
+          this.togglePlaylist();
         },
 
         updateDockUI() {
           const dock = document.getElementById('music-dock');
           const playIcon = document.getElementById('icon-play');
           const pauseIcon = document.getElementById('icon-pause');
+          const trackTitle = document.getElementById('music-track-title');
           const statusLabel = document.getElementById('music-status-label');
           if (!dock) return;
 
+          const track = this.playlist[this.currentTrack];
           dock.classList.toggle('is-playing', this.isPlaying);
           playIcon.style.display = this.isPlaying ? 'none' : 'block';
           pauseIcon.style.display = this.isPlaying ? 'block' : 'none';
-          statusLabel.textContent = this.isPlaying ? 'Sedang Diputar • Hangat' : 'Melodi Piano • Jeda';
+          if (trackTitle) trackTitle.textContent = track.title;
+          statusLabel.textContent = `${track.artist} • ${this.isPlaying ? 'Diputar' : 'Jeda'}`;
         }
       };
 
+      AudioEngine.renderPlaylist();
+      AudioEngine.updateDockUI();
+      const bgmEl = document.getElementById('bgm-audio');
+      if (bgmEl) {
+        bgmEl.addEventListener('ended', () => AudioEngine.nextTrack());
+      }
       document.getElementById('music-toggle-btn').addEventListener('click', () => AudioEngine.toggleMusic());
-      document.getElementById('music-mode-btn').addEventListener('click', () => AudioEngine.switchMode());
+      document.getElementById('music-prev-btn').addEventListener('click', () => AudioEngine.prevTrack());
+      document.getElementById('music-next-btn').addEventListener('click', () => AudioEngine.nextTrack());
+      document.getElementById('music-mode-btn').addEventListener('click', () => AudioEngine.togglePlaylist());
 
       /* ----------------------------------------------------------------------
          [2] INTERACTIVE 60 FPS CONSTELLATION + FLOATING WARM WORDS CANVAS
