@@ -2416,6 +2416,147 @@
       color: #ffffff;
     }
 
+    /* ==========================================================================
+       [17B] STICKY NOTES / KERTAS CATATAN PESAN SISWA (#wishes-container)
+       ========================================================================== */
+    .notes-board-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.15rem;
+      padding: 0.75rem 0.25rem;
+    }
+
+    .note-paper {
+      position: relative;
+      padding: 1.35rem 1.15rem 1.05rem;
+      border-radius: 4px 14px 12px 12px;
+      color: #1f1629;
+      box-shadow:
+        0 10px 24px -6px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      transition: transform 0.28s var(--ease-spring), box-shadow 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 165px;
+      transform: rotate(var(--note-rot, -1deg));
+    }
+
+    .note-paper::before {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 54px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.48);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
+    }
+
+    .note-paper:hover {
+      transform: translateY(-6px) rotate(0deg) scale(1.02);
+      box-shadow: 0 20px 36px -8px rgba(0, 0, 0, 0.72);
+      z-index: 3;
+    }
+
+    .note-paper.note-cream {
+      background: linear-gradient(155deg, #fff6d6 0%, #fde8a6 100%);
+      --note-rot: -1.2deg;
+    }
+
+    .note-paper.note-rose {
+      background: linear-gradient(155deg, #ffe2eb 0%, #ffc4d6 100%);
+      --note-rot: 1.1deg;
+    }
+
+    .note-paper.note-mint {
+      background: linear-gradient(155deg, #dffef0 0%, #b8f5da 100%);
+      --note-rot: -0.8deg;
+    }
+
+    .note-paper.note-lavender {
+      background: linear-gradient(155deg, #efe4ff 0%, #dbc3ff 100%);
+      --note-rot: 1.4deg;
+    }
+
+    .note-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      border-bottom: 1px dashed rgba(31, 22, 41, 0.16);
+      padding-bottom: 0.42rem;
+    }
+
+    .note-author {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: #190e24;
+    }
+
+    .note-badge {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 0.16rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(31, 22, 41, 0.08);
+      color: #4a3560;
+    }
+
+    .note-message {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #261b33;
+      margin-bottom: 0.85rem;
+      word-break: break-word;
+    }
+
+    .note-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: #5b4870;
+    }
+
+    .note-like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(31, 22, 41, 0.12);
+      color: #be185d;
+      font-weight: 700;
+      font-size: 0.72rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .note-like-btn:hover {
+      transform: scale(1.08);
+      background: #ffffff;
+    }
+
+    @media (max-width: 600px) {
+      .notes-board-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .note-paper {
+        --note-rot: 0deg;
+      }
+    }
+
     .music-ctrl-btn {
       width: 30px;
       height: 30px;
@@ -2709,6 +2850,8 @@
       }
     }
   </style>
+  <!-- Supabase JS SDK v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -4562,37 +4705,85 @@
           .replace(/'/g, '&#39;');
       }
 
+      // ======================================================================
+      // KONFIGURASI SUPABASE (Ganti dengan Project URL & Anon Key Supabase kamu)
+      // Tabel: wishes (id, name, message, badge, likes, created_at)
+      // ======================================================================
+      const SUPABASE_URL = 'https://gebmqgvtgvruyhuoyahn.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_qyAOogaZcgIpHWEubzyjGQ_ADmKHsSv';
+      const isSupabaseReady =
+        typeof window.supabase !== 'undefined' &&
+        SUPABASE_URL.startsWith('https://') &&
+        SUPABASE_ANON_KEY.length > 20;
+      const supabaseClient = isSupabaseReady
+        ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        : null;
+
+      const noteThemes = ['note-cream', 'note-rose', 'note-mint', 'note-lavender'];
+
       function renderWishes() {
-        wishesContainer.innerHTML = wishesList.map((w, index) => `
-          <div class="wish-entry">
-            <div class="wish-header">
-              <span><span class="wish-hash">${escapeHtml(w.badge || 'Ucapan #' + String(index + 1).padStart(2, '0'))}</span> &bull; <span class="wish-author">${escapeHtml(w.name)}</span></span>
-              <span class="wish-meta-right">
-                <span class="wish-time">${escapeHtml(w.time)}</span>
-                <button type="button" class="wish-like-btn" data-like-idx="${index}" aria-label="Beri tanda suka">&hearts; ${Number(w.likes || 1)}</button>
-              </span>
+        wishesContainer.className = 'notes-board-grid';
+        wishesContainer.innerHTML = wishesList.map((w, index) => {
+          const theme = noteThemes[index % noteThemes.length];
+          return `
+          <article class="note-paper ${theme}">
+            <div>
+              <div class="note-header">
+                <span class="note-author">${escapeHtml(w.name)}</span>
+                <span class="note-badge">${escapeHtml(w.badge || '#' + String(index + 1).padStart(2, '0'))}</span>
+              </div>
+              <div class="note-message">${escapeHtml(w.message)}</div>
             </div>
-            <div class="wish-message">${escapeHtml(w.message)}</div>
-          </div>
-        `).join('');
-        wishCountStatus.textContent = `${wishesList.length} UCAPAN`;
+            <div class="note-footer">
+              <span>${escapeHtml(w.time || '25 Nov 2026')}</span>
+              <button type="button" class="note-like-btn wish-like-btn" data-like-idx="${index}" aria-label="Beri tanda suka">&hearts; ${Number(w.likes || 1)}</button>
+            </div>
+          </article>
+        `;
+        }).join('');
+        wishCountStatus.textContent = `${wishesList.length} NOTES`;
+      }
+
+      async function loadWishesFromSupabase() {
+        if (!supabaseClient) return;
+        const { data, error } = await supabaseClient
+          .from('wishes')
+          .select('*')
+          .order('created_at', { ascending: true });
+        if (!error && Array.isArray(data) && data.length > 0) {
+          wishesList = data.map((row, idx) => ({
+            id: row.id,
+            name: row.name,
+            message: row.message,
+            badge: row.badge || `Ucapan #${String(idx + 1).padStart(2, '0')}`,
+            likes: row.likes || 1,
+            time: row.created_at ? new Date(row.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : '25 Nov 2026'
+          }));
+          renderWishes();
+        }
       }
 
       renderWishes();
+      loadWishesFromSupabase();
 
-      wishesContainer.addEventListener('click', (e) => {
+      wishesContainer.addEventListener('click', async (e) => {
         const likeBtn = e.target.closest('.wish-like-btn');
         if (!likeBtn) return;
         const idx = Number(likeBtn.dataset.likeIdx);
         if (!Number.isFinite(idx) || !wishesList[idx]) return;
 
-        wishesList[idx].likes = (Number(wishesList[idx].likes) || 1) + 1;
+        const newLikes = (Number(wishesList[idx].likes) || 1) + 1;
+        wishesList[idx].likes = newLikes;
         safeStorage.set(WISHES_STORAGE_KEY, wishesList);
         renderWishes();
         AudioEngine.playCrystalChime();
+
+        if (supabaseClient && wishesList[idx].id) {
+          await supabaseClient.from('wishes').update({ likes: newLikes }).eq('id', wishesList[idx].id);
+        }
       });
 
-      wishForm.addEventListener('submit', (e) => {
+      wishForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = wishNameInput.value.trim();
         const message = wishMsgInput.value.trim();
@@ -4614,6 +4805,17 @@
           likes: 1,
           message
         };
+
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient
+            .from('wishes')
+            .insert([{ name, message, badge: newWish.badge, likes: 1 }])
+            .select()
+            .single();
+          if (!error && data) {
+            newWish.id = data.id;
+          }
+        }
 
         wishesList.push(newWish);
         safeStorage.set(WISHES_STORAGE_KEY, wishesList);
