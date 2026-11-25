@@ -4590,6 +4590,9 @@
         : null;
 
       const noteThemes = ['note-cream', 'note-rose', 'note-mint', 'note-lavender'];
+      const MY_WISH_IDS_KEY = 'hgn2026_my_wish_ids_v1';
+      let myWishIds = safeStorage.get(MY_WISH_IDS_KEY, []);
+      if (!Array.isArray(myWishIds)) myWishIds = [];
 
       function renderWishes() {
         wishesContainer.className = 'notes-board-grid';
@@ -4600,6 +4603,7 @@
         }
         wishesContainer.innerHTML = wishesList.map((w, index) => {
           const theme = noteThemes[index % noteThemes.length];
+          const isMine = w.id && myWishIds.includes(w.id);
           return `
           <article class="note-paper ${theme}">
             <div>
@@ -4611,7 +4615,10 @@
             </div>
             <div class="note-footer">
               <span>${escapeHtml(w.time || '25 Nov 2026')}</span>
-              <button type="button" class="note-like-btn wish-like-btn" data-like-idx="${index}" aria-label="Beri tanda suka">&hearts; ${Number(w.likes || 1)}</button>
+              <div style="display:flex;align-items:center;gap:0.35rem;">
+                ${isMine ? `<button type="button" class="note-like-btn wish-del-btn" data-del-idx="${index}" aria-label="Hapus catatan saya" style="color:#dc2626;">Hapus</button>` : ''}
+                <button type="button" class="note-like-btn wish-like-btn" data-like-idx="${index}" aria-label="Beri tanda suka">&hearts; ${Number(w.likes || 1)}</button>
+              </div>
             </div>
           </article>
         `;
@@ -4642,6 +4649,22 @@
       loadWishesFromSupabase();
 
       wishesContainer.addEventListener('click', async (e) => {
+        const delBtn = e.target.closest('.wish-del-btn');
+        if (delBtn) {
+          const idx = Number(delBtn.dataset.delIdx);
+          const item = wishesList[idx];
+          if (!item || !item.id || !myWishIds.includes(item.id)) return;
+          if (supabaseClient) {
+            await supabaseClient.from('wishes').delete().eq('id', item.id);
+          }
+          myWishIds = myWishIds.filter((id) => id !== item.id);
+          safeStorage.set(MY_WISH_IDS_KEY, myWishIds);
+          wishesList.splice(idx, 1);
+          renderWishes();
+          showToast('Catatanmu berhasil dihapus.');
+          return;
+        }
+
         const likeBtn = e.target.closest('.wish-like-btn');
         if (!likeBtn) return;
         const idx = Number(likeBtn.dataset.likeIdx);
@@ -4689,6 +4712,8 @@
             .single();
           if (!error && data) {
             newWish.id = data.id;
+            myWishIds.push(data.id);
+            safeStorage.set(MY_WISH_IDS_KEY, myWishIds);
           }
         }
 
@@ -6595,6 +6620,9 @@
         : null;
 
       const noteThemes = ['note-cream', 'note-rose', 'note-mint', 'note-lavender'];
+      const MY_WISH_IDS_KEY = 'hgn2026_my_wish_ids_v1';
+      let myWishIds = safeStorage.get(MY_WISH_IDS_KEY, []);
+      if (!Array.isArray(myWishIds)) myWishIds = [];
 
       function renderWishes() {
         wishesContainer.className = 'notes-board-grid';
@@ -6605,6 +6633,7 @@
         }
         wishesContainer.innerHTML = wishesList.map((w, index) => {
           const theme = noteThemes[index % noteThemes.length];
+          const isMine = w.id && myWishIds.includes(w.id);
           return `
           <article class="note-paper ${theme}">
             <div>
@@ -6616,7 +6645,10 @@
             </div>
             <div class="note-footer">
               <span>${escapeHtml(w.time || '25 Nov 2026')}</span>
-              <button type="button" class="note-like-btn wish-like-btn" data-like-idx="${index}" aria-label="Beri tanda suka">&hearts; ${Number(w.likes || 1)}</button>
+              <div style="display:flex;align-items:center;gap:0.35rem;">
+                ${isMine ? `<button type="button" class="note-like-btn wish-del-btn" data-del-idx="${index}" aria-label="Hapus catatan saya" style="color:#dc2626;">Hapus</button>` : ''}
+                <button type="button" class="note-like-btn wish-like-btn" data-like-idx="${index}" aria-label="Beri tanda suka">&hearts; ${Number(w.likes || 1)}</button>
+              </div>
             </div>
           </article>
         `;
@@ -6647,6 +6679,22 @@
       loadWishesFromSupabase();
 
       wishesContainer.addEventListener('click', async (e) => {
+        const delBtn = e.target.closest('.wish-del-btn');
+        if (delBtn) {
+          const idx = Number(delBtn.dataset.delIdx);
+          const item = wishesList[idx];
+          if (!item || !item.id || !myWishIds.includes(item.id)) return;
+          if (supabaseClient) {
+            await supabaseClient.from('wishes').delete().eq('id', item.id);
+          }
+          myWishIds = myWishIds.filter((id) => id !== item.id);
+          safeStorage.set(MY_WISH_IDS_KEY, myWishIds);
+          wishesList.splice(idx, 1);
+          renderWishes();
+          showToast('Catatanmu berhasil dihapus.');
+          return;
+        }
+
         const likeBtn = e.target.closest('.wish-like-btn');
         if (!likeBtn) return;
         const idx = Number(likeBtn.dataset.likeIdx);
@@ -6694,6 +6742,8 @@
             .single();
           if (!error && data) {
             newWish.id = data.id;
+            myWishIds.push(data.id);
+            safeStorage.set(MY_WISH_IDS_KEY, myWishIds);
           }
         }
 
