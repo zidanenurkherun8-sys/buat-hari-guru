@@ -1934,6 +1934,12 @@
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
+    textarea.term-input {
+      resize: vertical;
+      min-height: 46px;
+      line-height: 1.5;
+    }
+
     .term-input::placeholder {
       color: var(--text-muted);
     }
@@ -2481,6 +2487,7 @@
       color: #261b33;
       margin-bottom: 0.85rem;
       word-break: break-word;
+      white-space: pre-wrap;
     }
 
     .note-footer {
@@ -3778,19 +3785,17 @@
                 id="wish-name-input"
                 class="term-input"
                 placeholder="Nama kamu (misal: Raka)"
-                maxlength="40"
                 required
                 aria-label="Nama pengirim doa"
               />
-              <input
-                type="text"
+              <textarea
                 id="wish-msg-input"
                 class="term-input"
-                placeholder="Tulis ucapan atau doa terbaik untuk Bu Dewi..."
-                maxlength="240"
+                rows="2"
+                placeholder="Tulis ucapan atau doa terbaik untuk Bu Dewi (bebas tanpa batas kata)..."
                 required
                 aria-label="Pesan doa untuk Bu Dewi"
-              />
+              ></textarea>
               <button type="submit" class="term-submit-btn">Kirim Doa &rarr;</button>
             </div>
           </form>
