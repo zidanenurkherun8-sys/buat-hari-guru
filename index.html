@@ -2761,13 +2761,231 @@
        [18] FOOTER & STUDIO TOAST NOTIFICATION
        ========================================================================== */
     .site-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 2.5rem 0 5.5rem;
+      border-top: 1px solid rgba(255, 180, 198, 0.16);
+      padding: 4.5rem 0 6rem;
       margin-top: 2rem;
-      background: rgba(7, 5, 12, 0.76);
+      background: linear-gradient(180deg, rgba(11, 8, 19, 0.55) 0%, rgba(6, 4, 10, 0.96) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 35%, rgba(255, 117, 151, 0.08), transparent 45%),
+                  radial-gradient(circle at 85% 65%, rgba(255, 216, 155, 0.07), transparent 45%);
+      pointer-events: none;
+    }
+
+    .footer-showcase-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 2.75rem;
+    }
+
+    /* Kolase Foto Besar di Kiri (Semua foto menyatu dalam 1 frame megah) */
+    .footer-collage-frame {
+      position: relative;
+      border-radius: 1.5rem;
+      padding: 0.75rem;
+      background: linear-gradient(145deg, rgba(255, 216, 155, 0.16), rgba(255, 117, 151, 0.12), rgba(255, 255, 255, 0.04));
+      border: 1.5px solid rgba(255, 216, 155, 0.3);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(255, 117, 151, 0.12);
+    }
+
+    .footer-collage-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: 92px;
+      gap: 6px;
+      border-radius: 1.05rem;
+      overflow: hidden;
+      background: #0d0818;
+    }
+
+    .collage-tile {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .collage-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+    }
+
+    .collage-tile:hover img {
+      transform: scale(1.07);
+      filter: brightness(1.08);
+    }
+
+    /* Penempatan proporsional agar semua 10 foto menyatu rapi jadi 1 kolase besar */
+    .tile-1 { grid-column: span 4; grid-row: span 2; } /* bersama-bu-dewi-1 */
+    .tile-2 { grid-column: span 2; grid-row: span 2; } /* bersama-bu-dewi-2 */
+    .tile-3 { grid-column: span 2; grid-row: span 2; } /* kelas-1 */
+    .tile-4 { grid-column: span 2; grid-row: span 1; } /* kelas-2 */
+    .tile-5 { grid-column: span 2; grid-row: span 1; } /* kelas-3 */
+    .tile-6 { grid-column: span 2; grid-row: span 1; } /* kelas-4 */
+    .tile-7 { grid-column: span 2; grid-row: span 1; } /* gmeet */
+    .tile-8 { grid-column: span 2; grid-row: span 1; } /* kelas-5 */
+    .tile-9 { grid-column: span 2; grid-row: span 1; } /* kelas-6 */
+    .tile-10 { grid-column: span 2; grid-row: span 1; } /* kelas-7 */
+
+    .footer-collage-badge {
+      position: absolute;
+      left: 1.4rem;
+      bottom: 1.4rem;
+      z-index: 3;
+      padding: 0.48rem 1rem;
+      border-radius: 999px;
+      background: rgba(12, 8, 22, 0.84);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 216, 155, 0.42);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--champagne-bright);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Bagian Kanan Footer (Kata-kata, Kutipan, Statistik & Navigasi) */
+    .footer-story-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .footer-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      width: fit-content;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255, 117, 151, 0.12);
+      border: 1px solid rgba(255, 117, 151, 0.32);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      color: var(--rose-soft);
+      text-transform: uppercase;
+    }
+
+    .footer-heading {
+      font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+      font-size: clamp(1.65rem, 2.7vw, 2.3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--cream);
+    }
+
+    .footer-heading em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .footer-dedication {
+      font-size: 0.94rem;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+
+    .footer-quote-box {
+      padding: 1rem 1.2rem;
+      border-radius: 0.95rem;
+      background: rgba(255, 255, 255, 0.035);
+      border-left: 3px solid var(--gold);
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: #f3e8ff;
+      font-style: italic;
+    }
+
+    .footer-meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .footer-meta-pill {
+      padding: 0.5rem 0.85rem;
+      border-radius: 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cream);
+    }
+
+    .footer-meta-pill span {
+      display: block;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      margin-bottom: 0.12rem;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      padding-top: 0.35rem;
+    }
+
+    .footer-quick-link {
+      padding: 0.42rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .footer-quick-link:hover {
+      background: rgba(255, 117, 151, 0.16);
+      border-color: rgba(255, 117, 151, 0.45);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .footer-top-btn {
+      margin-left: auto;
+      padding: 0.44rem 0.95rem;
+      border-radius: 999px;
+      background: linear-gradient(120deg, rgba(255, 216, 155, 0.2), rgba(255, 117, 151, 0.2));
+      border: 1px solid rgba(255, 216, 155, 0.45);
+      color: var(--champagne-bright);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .footer-top-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 117, 151, 0.25);
     }
 
     .footer-inner {
+      position: relative;
+      z-index: 1;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -2780,6 +2998,29 @@
 
     .footer-inner strong {
       color: var(--champagne-bright);
+    }
+
+    @media (max-width: 960px) {
+      .footer-showcase-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .footer-collage-grid {
+        grid-auto-rows: 78px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .footer-collage-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 72px;
+      }
+      .tile-1 { grid-column: span 4; grid-row: span 2; }
+      .tile-2, .tile-3, .tile-4, .tile-5, .tile-6, .tile-7, .tile-8, .tile-9, .tile-10 {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      .tile-10 { grid-column: span 4; }
     }
 
     .studio-toast {
@@ -3943,15 +4184,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <div>Dibuat dengan penuh rasa sayang oleh <strong>Siswa-Siswi Kelas 11 RPL B</strong> &bull; SMKN 1 Cimahi</div>
-        <div>HARI GURU NASIONAL &bull; 25 NOVEMBER 2026</div>
-      </div>
-    </footer>
-  </div>
-
     <!-- ======================================================================
          BAGIAN VIDEO: MOMEN SPESIAL HARI GURU (#video-momen)
          ====================================================================== -->
@@ -4055,6 +4287,81 @@
         </div>
       </div>
     </section>
+
+    <!-- Footer Kolase Foto & Dedikasi -->
+    <footer class="site-footer" id="footer-kenangan">
+      <div class="container">
+        <div class="footer-showcase-grid">
+          <!-- KIRI: Kolase Satu Bingkai Besar Semua Foto Kebersamaan -->
+          <div class="footer-collage-frame reveal">
+            <div class="footer-collage-grid">
+              <figure class="collage-tile tile-1">
+                <img src="assets/images/bersama-bu-dewi-1.jpeg" alt="Kebersamaan XI RPL B bersama Bu Dewi" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-2">
+                <img src="assets/images/bersama-bu-dewi-2.jpeg" alt="Momen Hangat Bersama Bu Dewi" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-3">
+                <img src="assets/images/kelas-1.jpeg" alt="Keluarga XI RPL B 1" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-4">
+                <img src="assets/images/kelas-2.jpeg" alt="Keluarga XI RPL B 2" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-5">
+                <img src="assets/images/kelas-3.jpeg" alt="Keluarga XI RPL B 3" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-6">
+                <img src="assets/images/kelas-4.jpeg" alt="Keluarga XI RPL B 4" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-7">
+                <img src="assets/images/gmeet-11rplb.jpg" alt="Momen Virtual XI RPL B" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-8">
+                <img src="assets/images/kelas-5.jpeg" alt="Keluarga XI RPL B 5" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-9">
+                <img src="assets/images/kelas-6.jpeg" alt="Keluarga XI RPL B 6" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="collage-tile tile-10">
+                <img src="assets/images/kelas-7.jpeg" alt="Keluarga XI RPL B 7" loading="lazy" decoding="async" />
+              </figure>
+            </div>
+            <div class="footer-collage-badge">📸 10 MOMEN TERBAIK &bull; KELUARGA BESAR XI RPL B</div>
+          </div>
+
+          <!-- KANAN: Kata-kata, Kutipan, Info Kelas & Navigasi -->
+          <div class="footer-story-col reveal">
+            <div class="footer-eyebrow">&#10022; Penutup Persembahan</div>
+            <h2 class="footer-heading">Terima Kasih atas Segalanya, <em>Ibu Dewi Arni, S.Pd.</em></h2>
+            <p class="footer-dedication">
+              Setiap tawa di ruang kelas, nasihat lembut di saat kami lelah, dan kesabaran Ibu mendampingi perjalanan kami di SMKN 1 Cimahi akan selalu menjadi kenangan paling berharga yang kami bawa sampai kapan pun.
+            </p>
+            <blockquote class="footer-quote-box">
+              &ldquo;Seorang wali kelas bukan sekadar pengajar di depan papan tulis, melainkan rumah kedua yang menumbuhkan keberanian, kehangatan, dan impian di hati anak-anaknya.&rdquo;
+            </blockquote>
+            <div class="footer-meta-pills">
+              <div class="footer-meta-pill"><span>KELAS</span>XI RPL B</div>
+              <div class="footer-meta-pill"><span>SEKOLAH</span>SMKN 1 Cimahi</div>
+              <div class="footer-meta-pill"><span>WALI KELAS</span>Ibu Dewi Arni, S.Pd.</div>
+            </div>
+            <div class="footer-quick-nav">
+              <a href="#kenangan" class="footer-quick-link">Perjalanan</a>
+              <a href="#galeri" class="footer-quick-link">Galeri</a>
+              <a href="#surat" class="footer-quick-link">Surat Terbuka</a>
+              <a href="#konsol" class="footer-quick-link">Papan Doa</a>
+              <a href="#video-momen" class="footer-quick-link">Selipan Video</a>
+              <a href="#top" class="footer-top-btn">Ke Atas &uarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-inner">
+          <div>Dibuat dengan penuh rasa sayang oleh <strong>Siswa-Siswi Kelas 11 RPL B</strong> &bull; SMKN 1 Cimahi</div>
+          <div>HARI GURU NASIONAL &bull; 25 NOVEMBER 2026</div>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <!-- ========================================================================
        CINEMATIC LIGHTBOX MODAL (FOR GALLERY ARTWORKS)
