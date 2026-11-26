@@ -2519,6 +2519,56 @@
       cursor: pointer;
     }
 
+    .note-edit-textarea {
+      width: 100%;
+      min-height: 84px;
+      padding: 0.55rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid rgba(31, 22, 41, 0.25);
+      background: rgba(255, 255, 255, 0.78);
+      color: #1f1629;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      resize: vertical;
+      margin-bottom: 0.65rem;
+      outline: none;
+    }
+    .note-edit-textarea:focus {
+      border-color: #be185d;
+      box-shadow: 0 0 0 2px rgba(190, 24, 93, 0.16);
+    }
+    .note-edit-colors {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.7rem;
+    }
+    .note-edit-swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(31, 22, 41, 0.35);
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.15s ease;
+    }
+    .note-edit-swatch.is-selected {
+      border-color: #1f1629;
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 3.5px #be185d;
+      transform: scale(1.12);
+    }
+    .note-edit-custom {
+      width: 24px;
+      height: 22px;
+      border: 1px solid rgba(31, 22, 41, 0.28);
+      border-radius: 6px;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
     .note-header {
       display: flex;
       align-items: center;
@@ -5397,6 +5447,9 @@
         };
       }
 
+      let editingWishIndex = -1;
+      let editDraftColor = 'note-cream';
+
       function renderWishes() {
         wishesContainer.className = 'notes-board-grid';
         if (wishesList.length === 0) {
@@ -5404,10 +5457,44 @@
           wishCountStatus.textContent = '0 NOTES';
           return;
         }
+        const swatchStyles = {
+          'note-cream': 'linear-gradient(155deg,#fff6d6,#fde8a6)',
+          'note-rose': 'linear-gradient(155deg,#ffe2eb,#ffc4d6)',
+          'note-mint': 'linear-gradient(155deg,#dffef0,#b8f5da)',
+          'note-lavender': 'linear-gradient(155deg,#efe4ff,#dbc3ff)',
+          'note-sky': 'linear-gradient(155deg,#e0f2fe,#bae6fd)',
+          'note-peach': 'linear-gradient(155deg,#ffedd5,#fed7aa)'
+        };
         wishesContainer.innerHTML = wishesList.map((w, index) => {
           const parsed = parseWishBadgeAndStyle(w.badge, index);
           const isMine = w.id && myWishIds.includes(w.id);
-          const darkCustom = parsed.customStyle && parsed.customStyle.includes('#fdf8ff');
+          const isEditing = isMine && editingWishIndex === index;
+          const activeColor = isEditing ? editDraftColor : (parsed.themeClass || (String(w.badge || '').split('|')[1] || 'note-cream'));
+          const activeParsed = isEditing ? parseWishBadgeAndStyle(`${parsed.label}|${editDraftColor}`, index) : parsed;
+          const darkCustom = activeParsed.customStyle && activeParsed.customStyle.includes('#fdf8ff');
+
+          if (isEditing) {
+            return `
+            <article class="note-paper ${activeParsed.themeClass}" ${activeParsed.customStyle ? `style="${activeParsed.customStyle}"` : ''}>
+              <div>
+                <div class="note-header">
+                  <span class="note-author" ${darkCustom ? 'style="color:#ffffff;"' : ''}>${escapeHtml(w.name)}</span>
+                  <span class="note-badge" ${darkCustom ? 'style="background:rgba(255,255,255,0.18);color:#ffffff;"' : ''}>Edit Catatan</span>
+                </div>
+                <textarea class="note-edit-textarea" id="wish-edit-text-${index}" aria-label="Edit kata-kata catatan">${escapeHtml(w.message)}</textarea>
+                <div class="note-edit-colors" role="radiogroup" aria-label="Ubah warna kertas">
+                  ${noteThemes.map((t) => `<button type="button" class="note-edit-swatch ${activeColor === t ? 'is-selected' : ''}" data-edit-idx="${index}" data-edit-theme="${t}" style="background:${swatchStyles[t]};" title="Pilih warna"></button>`).join('')}
+                  <input type="color" class="note-edit-custom" data-edit-idx="${index}" value="${/^#[0-9a-fA-F]{6}$/.test(activeColor) ? activeColor : '#fce7f3'}" title="Warna kustom" aria-label="Pilih warna kustom" />
+                </div>
+              </div>
+              <div class="note-footer">
+                <button type="button" class="note-like-btn wish-cancel-btn" style="color:#4a3560;">Batal</button>
+                <button type="button" class="note-like-btn wish-save-btn" data-save-idx="${index}" style="background:#059669;color:#ffffff;border-color:#059669;">Simpan ✓</button>
+              </div>
+            </article>
+            `;
+          }
+
           return `
           <article class="note-paper ${parsed.themeClass}" ${parsed.customStyle ? `style="${parsed.customStyle}"` : ''}>
             <div>
@@ -5420,6 +5507,7 @@
             <div class="note-footer" ${darkCustom ? 'style="color:rgba(255,255,255,0.78);"' : ''}>
               <span>${escapeHtml(w.time || '25 Nov 2026')}</span>
               <div style="display:flex;align-items:center;gap:0.35rem;">
+                ${isMine ? `<button type="button" class="note-like-btn wish-edit-btn" data-edit-idx="${index}" aria-label="Edit catatan saya" style="color:#4338ca;">Edit</button>` : ''}
                 ${isMine ? `<button type="button" class="note-like-btn wish-del-btn" data-del-idx="${index}" aria-label="Hapus catatan saya" style="color:#dc2626;">Hapus</button>` : ''}
                 <button type="button" class="note-like-btn wish-like-btn" data-like-idx="${index}" aria-label="Beri tanda suka">&hearts; ${Number(w.likes || 1)}</button>
               </div>
@@ -5452,7 +5540,82 @@
       renderWishes();
       loadWishesFromSupabase();
 
+      wishesContainer.addEventListener('input', (e) => {
+        const customPicker = e.target.closest('.note-edit-custom');
+        if (customPicker && editingWishIndex !== -1) {
+          editDraftColor = customPicker.value;
+          const card = customPicker.closest('.note-paper');
+          if (card) {
+            noteThemes.forEach((t) => card.classList.remove(t));
+            card.style.background = editDraftColor;
+            card.style.color = isColorDark(editDraftColor) ? '#fdf8ff' : '#261b33';
+            card.querySelectorAll('.note-edit-swatch').forEach((s) => s.classList.remove('is-selected'));
+          }
+        }
+      });
+
       wishesContainer.addEventListener('click', async (e) => {
+        const editBtn = e.target.closest('.wish-edit-btn');
+        if (editBtn) {
+          const idx = Number(editBtn.dataset.editIdx);
+          const item = wishesList[idx];
+          if (!item || !item.id || !myWishIds.includes(item.id)) return;
+          editingWishIndex = idx;
+          const parts = String(item.badge || '').split('|');
+          editDraftColor = parts[1] ? parts[1].trim() : noteThemes[idx % noteThemes.length];
+          renderWishes();
+          const ta = document.getElementById(`wish-edit-text-${idx}`);
+          if (ta) ta.focus();
+          return;
+        }
+
+        const editSwatch = e.target.closest('.note-edit-swatch');
+        if (editSwatch && editingWishIndex !== -1) {
+          const idx = editingWishIndex;
+          const ta = document.getElementById(`wish-edit-text-${idx}`);
+          if (ta) wishesList[idx].message = ta.value;
+          editDraftColor = editSwatch.dataset.editTheme || 'note-cream';
+          renderWishes();
+          return;
+        }
+
+        const cancelBtn = e.target.closest('.wish-cancel-btn');
+        if (cancelBtn) {
+          editingWishIndex = -1;
+          renderWishes();
+          return;
+        }
+
+        const saveBtn = e.target.closest('.wish-save-btn');
+        if (saveBtn) {
+          const idx = Number(saveBtn.dataset.saveIdx);
+          const item = wishesList[idx];
+          if (!item || !item.id || !myWishIds.includes(item.id)) return;
+          const ta = document.getElementById(`wish-edit-text-${idx}`);
+          const newMsg = ta ? ta.value.trim() : '';
+          if (!newMsg) {
+            showToast('Kata-kata catatan tidak boleh kosong.');
+            return;
+          }
+          const label = String(item.badge || `Ucapan #${String(idx + 1).padStart(2, '0')}`).split('|')[0];
+          const newBadge = `${label}|${editDraftColor}`;
+          item.message = newMsg;
+          item.badge = newBadge;
+          editingWishIndex = -1;
+          safeStorage.set(WISHES_STORAGE_KEY, wishesList);
+          renderWishes();
+          AudioEngine.playCrystalChime();
+          showToast('Catatan dan warna kertasmu berhasil diperbarui!');
+
+          if (supabaseClient) {
+            await supabaseClient
+              .from('wishes')
+              .update({ message: newMsg, badge: newBadge })
+              .eq('id', item.id);
+          }
+          return;
+        }
+
         const delBtn = e.target.closest('.wish-del-btn');
         if (delBtn) {
           const idx = Number(delBtn.dataset.delIdx);
