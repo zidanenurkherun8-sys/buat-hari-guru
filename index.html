@@ -2815,313 +2815,151 @@
     }
   
     /* ============================================================
-       VIDEO ENVELOPE SECTION — BEHIND THE SCENES & HADIAH
+       VIDEO SELIPAN — BEHIND THE SCENES & HADIAH
        ============================================================ */
-    .videnv-section {
-      padding: 7rem 0 6rem;
-      position: relative;
-    }
+    .videnv-section { padding: 6rem 0 5rem; }
+    .videnv-intro { text-align: center; margin-bottom: 3.5rem; }
+    .videnv-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--cream); margin-bottom: 0.8rem; line-height: 1.2; }
+    .videnv-title em { font-style: normal; color: var(--gold); }
+    .videnv-desc { max-width: 520px; margin: 0 auto; color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
 
-    .videnv-intro {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-
-    .videnv-intro .section-tag {
-      margin-bottom: 1rem;
-    }
-
-    .videnv-title {
-      font-size: clamp(1.9rem, 4vw, 3rem);
-      font-weight: 800;
-      line-height: 1.18;
-      color: var(--cream);
-      margin-bottom: 0.9rem;
-    }
-
-    .videnv-title em {
-      font-style: normal;
-      color: var(--gold);
-    }
-
-    .videnv-desc {
-      max-width: 520px;
-      margin: 0 auto;
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.65;
-    }
-
-    /* ---- Timeline rail (selipan) ---- */
-    .videnv-timeline {
-      position: relative;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 0 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 3.2rem;
-    }
-
-    .videnv-timeline::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, transparent, rgba(255,117,151,0.4) 15%, rgba(255,117,151,0.4) 85%, transparent);
-      transform: translateX(-50%);
-    }
-
-    @media (max-width: 680px) {
-      .videnv-timeline::before { left: 1.6rem; }
-    }
-
-    /* ---- Single envelope card ---- */
-    .videnv-item {
-      position: relative;
+    .videnv-cards {
       display: grid;
-      grid-template-columns: 1fr 60px 1fr;
-      align-items: center;
-      gap: 0;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+      max-width: 1020px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .videnv-cards { grid-template-columns: 1fr; max-width: 380px; }
     }
 
-    .videnv-item:nth-child(even) .videnv-envelope-wrap { order: 3; }
-    .videnv-item:nth-child(even) .videnv-node { order: 2; }
-    .videnv-item:nth-child(even) .videnv-label { order: 1; text-align: right; }
-    .videnv-item:nth-child(odd)  .videnv-envelope-wrap { order: 1; }
-    .videnv-item:nth-child(odd)  .videnv-node { order: 2; }
-    .videnv-item:nth-child(odd)  .videnv-label { order: 3; text-align: left; }
-
-    @media (max-width: 680px) {
-      .videnv-item {
-        grid-template-columns: 60px 1fr;
-      }
-      .videnv-item:nth-child(even) .videnv-envelope-wrap,
-      .videnv-item:nth-child(even) .videnv-label {
-        order: unset;
-      }
-      .videnv-item:nth-child(even) .videnv-node { order: 1; }
-      .videnv-item:nth-child(even) .videnv-envelope-wrap { order: 2; }
-      .videnv-item:nth-child(even) .videnv-label { display: none; }
-      .videnv-item:nth-child(odd)  .videnv-label { display: none; }
-      .videnv-item:nth-child(odd)  .videnv-node { order: 1; }
-      .videnv-item:nth-child(odd)  .videnv-envelope-wrap { order: 2; }
-    }
-
-    /* timeline dot */
-    .videnv-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      z-index: 2;
-    }
-
-    .videnv-node-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--gold) 0%, var(--rose) 100%);
-      border: 3px solid var(--surface-2);
-      box-shadow: 0 0 18px rgba(255,117,151,0.65);
-      flex-shrink: 0;
-    }
-
-    /* label beside envelope */
-    .videnv-label {
-      padding: 0 1.5rem;
-    }
-
-    .videnv-label-num {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: .15em;
-      color: var(--rose-soft);
-      margin-bottom: 0.4rem;
-    }
-
-    .videnv-label-title {
-      font-size: 1.08rem;
-      font-weight: 700;
-      color: var(--cream);
-      line-height: 1.3;
-      margin-bottom: 0.4rem;
-    }
-
-    .videnv-label-desc {
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    /* ---- The Envelope Card itself ---- */
-    .videnv-envelope-wrap {
-      cursor: pointer;
-      perspective: 900px;
-    }
-
-    .videnv-envelope {
-      position: relative;
-      border-radius: 1.1rem;
+    .videnv-card {
+      border-radius: 1.25rem;
       overflow: hidden;
       background: var(--surface-2);
-      border: 1.5px solid rgba(255,117,151,0.22);
-      box-shadow: 0 8px 36px rgba(0,0,0,0.42), 0 0 0 0px rgba(255,117,151,0);
-      transition: box-shadow .35s ease, transform .35s ease;
+      border: 1.5px solid rgba(255, 117, 151, 0.22);
+      box-shadow: 0 10px 38px rgba(0, 0, 0, 0.45);
+      transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
     }
-
-    .videnv-envelope-wrap:hover .videnv-envelope {
-      box-shadow: 0 12px 48px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,117,151,0.4);
-      transform: translateY(-3px);
+    .videnv-card:not(.is-locked):hover {
+      box-shadow: 0 16px 52px rgba(0, 0, 0, 0.58), 0 0 0 2px rgba(255, 117, 151, 0.45);
+      transform: translateY(-4px);
     }
+    .videnv-card.is-locked { opacity: 0.55; cursor: not-allowed; }
+    .videnv-card.is-opened { cursor: default; border-color: rgba(255, 216, 155, 0.4); }
 
-    /* Sealed flap (top fold) */
-    .videnv-flap {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 100%;
-      pointer-events: none;
-      z-index: 10;
-      transform-origin: top center;
-      transition: transform 0.6s cubic-bezier(.4,0,.2,1), opacity 0.5s ease;
-    }
-
-    .videnv-flap svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* Inner preview (blurred/dark until opened) */
-    .videnv-preview {
+    /* Sealed envelope look — portrait ratio matching phone videos */
+    .videnv-thumb {
       position: relative;
-      aspect-ratio: 16/9;
+      aspect-ratio: 9 / 15;
+      background: #0d0820;
       overflow: hidden;
     }
-
-    .videnv-preview-thumb {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.3) blur(2px) saturate(0.5);
-      transform: scale(1.04);
-      transition: filter 0.5s ease, transform 0.5s ease;
-    }
-
-    .videnv-envelope.is-opened .videnv-preview-thumb {
-      filter: brightness(0.0) blur(6px);
-      transform: scale(1.1);
-    }
-
-    /* Overlay shimmer */
-    .videnv-preview-overlay {
+    .videnv-thumb-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg,
-        rgba(30,15,40,0.78) 0%,
-        rgba(90,30,80,0.55) 50%,
-        rgba(30,15,40,0.78) 100%);
+      background: linear-gradient(160deg, #1a0a2e 0%, #2d1245 50%, #160926 100%);
+    }
+    /* Flap triangle accent at top of sealed card */
+    .videnv-thumb-flap {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 36%;
+      background: linear-gradient(180deg, rgba(255, 117, 151, 0.14) 0%, transparent 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 1px solid rgba(255, 216, 155, 0.15);
+      pointer-events: none;
+    }
+    .videnv-thumb-lines {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 1.8rem;
+      opacity: 0.08;
+    }
+    .videnv-thumb-lines span { display: block; height: 1.5px; background: var(--rose-soft); border-radius: 2px; }
+    .videnv-thumb-lines span:nth-child(2) { width: 70%; }
+    .videnv-thumb-lines span:nth-child(3) { width: 55%; }
+    .videnv-thumb-lines span:nth-child(5) { width: 80%; }
+    .videnv-thumb-lines span:nth-child(6) { width: 65%; }
+
+    .videnv-center {
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.6rem;
-      transition: opacity 0.4s ease;
+      gap: 0.85rem;
+      padding: 1.2rem;
     }
-
-    .videnv-envelope.is-opened .videnv-preview-overlay {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .videnv-seal-icon {
-      width: 52px;
-      height: 52px;
+    .videnv-seal {
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,216,155,0.18), rgba(255,117,151,0.1));
-      border: 2px solid rgba(255,216,155,0.4);
+      background: radial-gradient(circle, rgba(255, 216, 155, 0.18), rgba(255, 117, 151, 0.08));
+      border: 2px solid rgba(255, 216, 155, 0.55);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.9rem;
       animation: sealPulse 2.4s infinite ease-in-out;
+      flex-shrink: 0;
     }
-
+    .videnv-card.is-locked .videnv-seal { border-color: rgba(180, 160, 200, 0.3); animation: none; }
     @keyframes sealPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255,216,155,0.5); transform: scale(1); }
-      50% { box-shadow: 0 0 0 10px rgba(255,216,155,0); transform: scale(1.07); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 216, 155, 0.45); transform: scale(1); }
+      50% { box-shadow: 0 0 0 14px rgba(255, 216, 155, 0); transform: scale(1.07); }
     }
-
-    .videnv-open-hint {
+    .videnv-seal-label {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: .14em;
-      color: rgba(255,232,184,0.8);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: rgba(255, 232, 184, 0.9);
+      text-align: center;
+      line-height: 1.6;
     }
 
-    /* ---- Video player (hidden until opened) ---- */
-    .videnv-player-wrap {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.7s cubic-bezier(.4,0,.2,1);
-      background: #000;
-    }
-
-    .videnv-envelope.is-opened .videnv-player-wrap {
-      max-height: 600px;
-    }
-
-    .videnv-player {
-      width: 100%;
-      aspect-ratio: 16/9;
-      display: block;
-      background: #000;
-    }
-
-    /* ---- Done badge ---- */
-    .videnv-done-badge {
+    /* Video player — hidden until opened, portrait 9:16 so video fills card nicely */
+    .videnv-video-wrap {
       display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.55rem 0;
+      background: #05030a;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+    }
+    .videnv-card.is-opened .videnv-thumb { display: none; }
+    .videnv-card.is-opened .videnv-video-wrap { display: block; }
+    .videnv-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #000;
+    }
+
+    /* Card footer */
+    .videnv-footer { padding: 1.1rem 1.2rem 1.2rem; border-top: 1px solid rgba(255, 117, 151, 0.12); }
+    .videnv-num { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; color: var(--rose-soft); margin-bottom: 0.35rem; }
+    .videnv-name { font-size: 0.98rem; font-weight: 700; color: var(--cream); line-height: 1.35; margin-bottom: 0.3rem; }
+    .videnv-subdesc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .videnv-done-pill {
+      display: none;
+      margin-top: 0.65rem;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: .12em;
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
       color: var(--emerald);
-      border-top: 1px solid rgba(0,230,118,0.18);
-    }
-
-    .videnv-envelope.is-done .videnv-done-badge {
-      display: flex;
-    }
-
-    /* ---- Locked overlay for future videos ---- */
-    .videnv-envelope.is-locked {
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    .videnv-envelope.is-locked .videnv-preview-overlay {
-      background: linear-gradient(135deg, rgba(10,5,20,0.88), rgba(10,5,20,0.88));
-    }
-
-    .videnv-locked-label {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: .13em;
-      color: rgba(200,180,220,0.6);
-      display: flex;
-      flex-direction: column;
+      gap: 0.35rem;
       align-items: center;
-      gap: 0.4rem;
     }
-
-    .videnv-locked-label .lock-emoji { font-size: 1.3rem; }
-    .videnv-locked-label span { text-transform: uppercase; }
+    .videnv-card.is-done .videnv-done-pill { display: flex; }
 
   </style>
   <!-- Supabase JS SDK v2 -->
@@ -3272,7 +3110,7 @@
                 src="assets/images/bu-dewi-portrait.jpg"
                 alt="Ibu Dewi Arni, S.Pd. - Wali Kelas 11 RPL B SMKN 1 Cimahi"
                 style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; border-radius: inherit; filter: contrast(1.04) saturate(1.06);"
-              />
+              / decoding="async" fetchpriority="high">
               <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,6,24,0.05) 0%, rgba(11,6,24,0.0) 55%, rgba(11,6,24,0.72) 100%); pointer-events: none;"></div>
               <div style="position: absolute; bottom: 1.15rem; left: 1.15rem; right: 1.15rem; pointer-events: none;">
                 <span style="display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--champagne); background: rgba(16,11,25,0.72); backdrop-filter: blur(8px); padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid rgba(255,216,155,0.3);">
@@ -3407,7 +3245,7 @@
           <button type="button" class="art-card spotlight-card reveal" data-art="0" data-category="math">
             <div class="art-visual">
               <span class="art-zoom-pill">LIHAT FOTO &nearr;</span>
-              <img src="assets/images/kelas-1.jpeg" alt="Momen Kebersamaan 11 RPL B" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
+              <img src="assets/images/kelas-1.jpeg" alt="Momen Kebersamaan 11 RPL B" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" / decoding="async">
             </div>
             <div class="art-content">
               <h3 class="art-title">Lentera yang Menerangi Langkah</h3>
@@ -3419,7 +3257,7 @@
           <button type="button" class="art-card spotlight-card reveal" data-art="1" data-category="rpl">
             <div class="art-visual">
               <span class="art-zoom-pill">LIHAT FOTO &nearr;</span>
-              <img src="assets/images/kelas-2.jpeg" alt="Kebersamaan 11 RPL B bersama Bu Dewi" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
+              <img src="assets/images/kelas-2.jpeg" alt="Kebersamaan 11 RPL B bersama Bu Dewi" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" / decoding="async">
             </div>
             <div class="art-content">
               <h3 class="art-title">Mekar dalam Bimbingan</h3>
@@ -3431,7 +3269,7 @@
           <button type="button" class="art-card spotlight-card reveal" data-art="2" data-category="math">
             <div class="art-visual">
               <span class="art-zoom-pill">LIHAT FOTO &nearr;</span>
-              <img src="assets/images/kelas-3.jpeg" alt="Suasana Belajar 11 RPL B" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
+              <img src="assets/images/kelas-3.jpeg" alt="Suasana Belajar 11 RPL B" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" / decoding="async">
             </div>
             <div class="art-content">
               <h3 class="art-title">Prisma Kesabaran Tanpa Batas</h3>
@@ -3443,7 +3281,7 @@
           <button type="button" class="art-card spotlight-card reveal" data-art="3" data-category="rpl">
             <div class="art-visual">
               <span class="art-zoom-pill">LIHAT FOTO &nearr;</span>
-              <img src="assets/images/kelas-4.jpeg" alt="Keluarga Besar 11 RPL B" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
+              <img src="assets/images/kelas-4.jpeg" alt="Keluarga Besar 11 RPL B" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" / decoding="async">
             </div>
             <div class="art-content">
               <h3 class="art-title">Bintang Penuntun Kami</h3>
@@ -3663,7 +3501,7 @@
 
     <!-- ======================================================================
          BAGIAN 05: KAPSUL KENANGAN & SLOT GALERI FOTO KELAS (#kapsul)
-         [PANDUAN PENGEMBANGAN: Ganti atribut src pada tag <img> dengan foto asli kelas]
+         [PANDUAN PENGEMBANGAN: Ganti atribut src pada tag <img decoding="async" loading="lazy"> dengan foto asli kelas]
          ====================================================================== -->
     <section id="kapsul" class="section-block">
       <div class="container">
@@ -3682,7 +3520,7 @@
                 src="assets/images/bersama-bu-dewi-1.jpeg"
                 alt="Foto Kebersamaan Kelas 11 RPL B bersama Ibu Dewi Arni"
                 loading="lazy"
-              />
+              / decoding="async">
               <span class="capsule-slot-badge">Kenangan 01</span>
             </div>
             <div class="capsule-body">
@@ -3699,7 +3537,7 @@
                 src="assets/images/bersama-bu-dewi-2.jpeg"
                 alt="Suasana Kebersamaan Kelas 11 RPL B bersama Bu Dewi"
                 loading="lazy"
-              />
+              / decoding="async">
               <span class="capsule-slot-badge">Kenangan 02</span>
             </div>
             <div class="capsule-body">
@@ -3716,7 +3554,7 @@
                 src="assets/images/gmeet-11rplb.jpg"
                 alt="Pertemuan Daring Google Meet Kelas 11 RPL B bersama Ibu Dewi Arni"
                 loading="lazy"
-              />
+              / decoding="async">
               <span class="capsule-slot-badge">Kenangan 03</span>
             </div>
             <div class="capsule-body">
@@ -3729,7 +3567,7 @@
 
           <article class="capsule-card spotlight-card reveal">
             <div class="capsule-media">
-              <img src="assets/images/kelas-5.jpeg" alt="Momen Keseruan 11 RPL B" loading="lazy" />
+              <img src="assets/images/kelas-5.jpeg" alt="Momen Keseruan 11 RPL B" loading="lazy" / decoding="async">
               <span class="capsule-slot-badge">Kenangan 04</span>
             </div>
             <div class="capsule-body">
@@ -3740,7 +3578,7 @@
 
           <article class="capsule-card spotlight-card reveal">
             <div class="capsule-media">
-              <img src="assets/images/kelas-6.jpeg" alt="Keseruan Kelas 11 RPL B" loading="lazy" />
+              <img src="assets/images/kelas-6.jpeg" alt="Keseruan Kelas 11 RPL B" loading="lazy" / decoding="async">
               <span class="capsule-slot-badge">Kenangan 05</span>
             </div>
             <div class="capsule-body">
@@ -3751,7 +3589,7 @@
 
           <article class="capsule-card spotlight-card reveal">
             <div class="capsule-media">
-              <img src="assets/images/kelas-7.jpeg" alt="Kebersamaan Kelas 11 RPL B" loading="lazy" />
+              <img src="assets/images/kelas-7.jpeg" alt="Kebersamaan Kelas 11 RPL B" loading="lazy" / decoding="async">
               <span class="capsule-slot-badge">Kenangan 06</span>
             </div>
             <div class="capsule-body">
@@ -3889,118 +3727,84 @@
   </div>
 
     <!-- ======================================================================
-         BAGIAN VIDEO: BEHIND THE SCENES & MOMEN PEMBERIAN HADIAH (#video-momen)
+         BAGIAN VIDEO: MOMEN SPESIAL HARI GURU (#video-momen)
          ====================================================================== -->
     <section id="video-momen" class="section-block videnv-section">
       <div class="container">
         <div class="videnv-intro reveal">
           <div class="section-tag">Behind The Scenes &bull; Momen Spesial</div>
           <h2 class="videnv-title">Selipan <em>Momen Berharga</em></h2>
-          <p class="videnv-desc">
-            Tiga selipan video dari momen spesial Hari Guru Nasional 11 RPL B.
-            Buka satu per satu — setiap amplop menyimpan kenangan yang tak ternilai.
-          </p>
+          <p class="videnv-desc">Tiga selipan video dari momen spesial Hari Guru Nasional 11 RPL B. Buka satu per satu — setiap amplop menyimpan kenangan yang tak ternilai.</p>
         </div>
-
-        <div class="videnv-timeline">
-
-          <!-- ======== VIDEO 1 ======== -->
-          <div class="videnv-item reveal" id="videnv-item-0">
-            <div class="videnv-envelope-wrap" onclick="videnvOpen(0)">
-              <div class="videnv-envelope" id="videnv-env-0">
-                <div class="videnv-preview">
-                  <div class="videnv-preview-overlay">
-                    <div class="videnv-seal-icon">🎬</div>
-                    <div class="videnv-open-hint">Ketuk untuk membuka</div>
-                  </div>
-                </div>
-                <div class="videnv-player-wrap">
-                  <video class="videnv-player" id="videnv-vid-0"
-                    preload="none" playsinline controls
-                    src="assets/videos/bts-1.mp4">
-                  </video>
-                </div>
-                <div class="videnv-done-badge">
-                  <span>✓</span><span>SELESAI DITONTON</span>
-                </div>
+        <div class="videnv-cards">
+          <!-- CARD 1 -->
+          <div class="videnv-card reveal" id="videnv-card-0" onclick="videnvOpen(0)">
+            <div class="videnv-thumb">
+              <div class="videnv-thumb-bg"></div>
+              <div class="videnv-thumb-flap"></div>
+              <div class="videnv-thumb-lines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="videnv-center">
+                <div class="videnv-seal">🎬</div>
+                <div class="videnv-seal-label">Ketuk untuk<br>membuka selipan</div>
               </div>
             </div>
-            <div class="videnv-node"><div class="videnv-node-dot"></div></div>
-            <div class="videnv-label">
-              <div class="videnv-label-num">📹 VIDEO 01 • BEHIND THE SCENES</div>
-              <div class="videnv-label-title">Di Balik Layar<br>Persiapan Hari Guru</div>
-              <div class="videnv-label-desc">Momen seru di balik layar saat kami mempersiapkan persembahan istimewa ini untuk Ibu Dewi tercinta.</div>
+            <div class="videnv-video-wrap">
+              <video class="videnv-video" id="videnv-vid-0" preload="none" playsinline controls src="assets/videos/bts-1.mp4"></video>
+            </div>
+            <div class="videnv-footer">
+              <div class="videnv-num">📹 VIDEO 01 &bull; BEHIND THE SCENES</div>
+              <div class="videnv-name">Di Balik Layar<br>Persiapan Hari Guru</div>
+              <div class="videnv-subdesc">Momen seru di balik layar saat mempersiapkan persembahan istimewa ini.</div>
+              <div class="videnv-done-pill"><span>✓</span>&nbsp;<span>Sudah ditonton</span></div>
             </div>
           </div>
 
-          <!-- ======== VIDEO 2 ======== -->
-          <div class="videnv-item reveal" id="videnv-item-1">
-            <div class="videnv-label">
-              <div class="videnv-label-num">🎥 VIDEO 02 • BEHIND THE SCENES</div>
-              <div class="videnv-label-title">Suasana &amp;<br>Momen Kebersamaan</div>
-              <div class="videnv-label-desc">Rekaman suasana kelas dan momen kebersamaan 11 RPL B yang penuh kehangatan bersama Bu Dewi.</div>
-            </div>
-            <div class="videnv-node"><div class="videnv-node-dot"></div></div>
-            <div class="videnv-envelope-wrap" onclick="videnvOpen(1)" id="videnv-wrap-1">
-              <div class="videnv-envelope is-locked" id="videnv-env-1">
-                <div class="videnv-preview">
-                  <div class="videnv-preview-overlay">
-                    <div class="videnv-locked-label">
-                      <span class="lock-emoji">🔒</span>
-                      <span>Tonton video pertama dulu</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="videnv-player-wrap">
-                  <video class="videnv-player" id="videnv-vid-1"
-                    preload="none" playsinline controls
-                    src="assets/videos/bts-2.mp4">
-                  </video>
-                </div>
-                <div class="videnv-done-badge">
-                  <span>✓</span><span>SELESAI DITONTON</span>
-                </div>
+          <!-- CARD 2 -->
+          <div class="videnv-card is-locked reveal" id="videnv-card-1" onclick="videnvOpen(1)">
+            <div class="videnv-thumb">
+              <div class="videnv-thumb-bg"></div>
+              <div class="videnv-thumb-flap"></div>
+              <div class="videnv-thumb-lines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="videnv-center">
+                <div class="videnv-seal" id="videnv-seal-1">🔒</div>
+                <div class="videnv-seal-label" id="videnv-lbl-1">Tonton video pertama<br>untuk membuka ini</div>
               </div>
+            </div>
+            <div class="videnv-video-wrap">
+              <video class="videnv-video" id="videnv-vid-1" preload="none" playsinline controls src="assets/videos/bts-2.mp4"></video>
+            </div>
+            <div class="videnv-footer">
+              <div class="videnv-num">🎥 VIDEO 02 &bull; BEHIND THE SCENES</div>
+              <div class="videnv-name">Suasana &amp;<br>Momen Kebersamaan</div>
+              <div class="videnv-subdesc">Rekaman suasana kelas dan momen kebersamaan 11 RPL B yang penuh kehangatan.</div>
+              <div class="videnv-done-pill"><span>✓</span>&nbsp;<span>Sudah ditonton</span></div>
             </div>
           </div>
 
-          <!-- ======== VIDEO 3 ======== -->
-          <div class="videnv-item reveal" id="videnv-item-2">
-            <div class="videnv-envelope-wrap" onclick="videnvOpen(2)" id="videnv-wrap-2">
-              <div class="videnv-envelope is-locked" id="videnv-env-2">
-                <div class="videnv-preview">
-                  <div class="videnv-preview-overlay">
-                    <div class="videnv-locked-label">
-                      <span class="lock-emoji">🔒</span>
-                      <span>Tonton video sebelumnya dulu</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="videnv-player-wrap">
-                  <video class="videnv-player" id="videnv-vid-2"
-                    preload="none" playsinline controls
-                    src="assets/videos/hadiah.mp4">
-                  </video>
-                </div>
-                <div class="videnv-done-badge">
-                  <span>✓</span><span>SELESAI DITONTON</span>
-                </div>
+          <!-- CARD 3 -->
+          <div class="videnv-card is-locked reveal" id="videnv-card-2" onclick="videnvOpen(2)">
+            <div class="videnv-thumb">
+              <div class="videnv-thumb-bg"></div>
+              <div class="videnv-thumb-flap"></div>
+              <div class="videnv-thumb-lines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="videnv-center">
+                <div class="videnv-seal" id="videnv-seal-2">🔒</div>
+                <div class="videnv-seal-label" id="videnv-lbl-2">Tonton video sebelumnya<br>untuk membuka ini</div>
               </div>
             </div>
-            <div class="videnv-node"><div class="videnv-node-dot"></div></div>
-            <div class="videnv-label">
-              <div class="videnv-label-num">🎁 VIDEO 03 • PEMBERIAN HADIAH</div>
-              <div class="videnv-label-title">Momen Pemberian<br>Hadiah untuk Bu Dewi</div>
-              <div class="videnv-label-desc">Momen haru saat kami menyerahkan hadiah dengan sepenuh hati kepada Ibu Dewi Arni, S.Pd. tercinta.</div>
+            <div class="videnv-video-wrap">
+              <video class="videnv-video" id="videnv-vid-2" preload="none" playsinline controls src="assets/videos/hadiah.mp4"></video>
+            </div>
+            <div class="videnv-footer">
+              <div class="videnv-num">🎁 VIDEO 03 &bull; PEMBERIAN HADIAH</div>
+              <div class="videnv-name">Momen Pemberian<br>Hadiah untuk Bu Dewi</div>
+              <div class="videnv-subdesc">Momen haru saat menyerahkan hadiah dengan sepenuh hati kepada Ibu Dewi tercinta.</div>
+              <div class="videnv-done-pill"><span>✓</span>&nbsp;<span>Sudah ditonton</span></div>
             </div>
           </div>
-
-        </div><!-- /.videnv-timeline -->
+        </div>
       </div>
     </section>
-
-
-  
 
   <!-- ========================================================================
        CINEMATIC LIGHTBOX MODAL (FOR GALLERY ARTWORKS)
@@ -4022,7 +3826,7 @@
        FLOATING AMBIENT MUSIC SYNTHESIZER DOCK (DUAL-MODE WEB AUDIO API)
        ======================================================================== -->
   <aside id="music-dock" class="music-dock" aria-label="Pemutar Playlist Lagu Hari Guru">
-    <audio id="bgm-audio" src="assets/audio/hymne-guru-piano.m4a" preload="auto"></audio>
+    <audio id="bgm-audio" src="assets/audio/hymne-guru-piano.m4a" preload="metadata"></audio>
 
     <div id="music-playlist-popover" class="music-playlist-popover" role="dialog" aria-label="Daftar Lagu Hari Guru">
       <div class="playlist-header">
@@ -5268,63 +5072,57 @@
 
 
       /* ======================================================================
-         [VIDEO ENVELOPE] Sequential unlock video player
+         [VIDEO ENVELOPE] Sequential card unlock
          ====================================================================== */
-      let videnvCurrentLevel = 0; // 0 = only vid 0 unlocked
-
       window.videnvOpen = function(idx) {
-        const env = document.getElementById('videnv-env-' + idx);
-        const vid = document.getElementById('videnv-vid-' + idx);
-        if (!env || !vid) return;
-        if (env.classList.contains('is-locked')) return;
-        if (env.classList.contains('is-opened')) {
-          // Already open — just scroll to and play
-          vid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          vid.play().catch(() => {});
+        var card = document.getElementById('videnv-card-' + idx);
+        var vid  = document.getElementById('videnv-vid-' + idx);
+        if (!card || !vid) return;
+
+        if (card.classList.contains('is-locked')) {
+          card.style.transform = 'translateX(-7px)';
+          setTimeout(function() { card.style.transform = 'translateX(7px)'; }, 80);
+          setTimeout(function() { card.style.transform = 'translateX(-3px)'; }, 160);
+          setTimeout(function() { card.style.transform = ''; }, 240);
+          return;
+        }
+        if (card.classList.contains('is-opened')) {
           return;
         }
 
         // Pause any other playing video
-        [0,1,2].forEach(i => {
+        [0, 1, 2].forEach(function(i) {
           if (i !== idx) {
-            const v = document.getElementById('videnv-vid-' + i);
+            var v = document.getElementById('videnv-vid-' + i);
             if (v && !v.paused) v.pause();
           }
         });
 
-        // Mute bg music while video plays
-        const bgm = document.getElementById('bgm-audio');
-        if (bgm) bgm.volume = 0.12;
+        // Duck background music while watching video
+        var bgm = document.getElementById('bgm-audio');
+        if (bgm) bgm.volume = 0.1;
 
-        env.classList.add('is-opened');
-
-        setTimeout(() => {
+        card.classList.add('is-opened');
+        setTimeout(function() {
           vid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          vid.play().catch(() => {});
-        }, 400);
+          vid.play().catch(function() {});
+        }, 200);
 
         vid.addEventListener('ended', function onEnd() {
           vid.removeEventListener('ended', onEnd);
-          env.classList.add('is-done');
+          card.classList.add('is-done');
           if (bgm) bgm.volume = 0.55;
 
-          // Unlock next video
-          const nextIdx = idx + 1;
-          if (nextIdx <= 2) {
-            const nextEnv = document.getElementById('videnv-env-' + nextIdx);
-            const nextWrap = document.getElementById('videnv-wrap-' + nextIdx);
-            if (nextEnv) {
-              nextEnv.classList.remove('is-locked');
-              // Swap locked overlay → open hint
-              const overlay = nextEnv.querySelector('.videnv-preview-overlay');
-              if (overlay) {
-                overlay.innerHTML = '<div class="videnv-seal-icon">🎬</div><div class="videnv-open-hint">Ketuk untuk membuka</div>';
-              }
-              // Scroll to next
-              setTimeout(() => {
-                (nextWrap || nextEnv).scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }, 600);
-            }
+          var nextCard = document.getElementById('videnv-card-' + (idx + 1));
+          if (nextCard) {
+            nextCard.classList.remove('is-locked');
+            var seal = document.getElementById('videnv-seal-' + (idx + 1));
+            var lbl  = document.getElementById('videnv-lbl-' + (idx + 1));
+            if (seal) seal.textContent = '🎬';
+            if (lbl)  lbl.innerHTML = 'Ketuk untuk<br>membuka selipan';
+            setTimeout(function() {
+              nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 450);
           }
         }, { once: true });
       };
